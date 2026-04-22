@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form untuk Orang Tua</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf6f1;
+      --warm: #f0e8dc;
+      --brown: #6b4c35;
+      --dark: #2c1f14;
+      --accent: #c97b4b;
+      --soft: #e8d5c0;
+      --text: #3d2b1f;
+      --muted: #9b7f6e;
+    }
+
+    body {
+      background: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+      background-image: radial-gradient(ellipse at 20% 0%, #f5e6d3 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 100%, #eddfc9 0%, transparent 60%);
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Header Card */
+    .header-card {
+      background: var(--brown);
+      border-radius: 20px 20px 0 0;
+      padding: 36px 40px 32px;
+      position: relative;
+      overflow: hidden;
+      border-top: 6px solid var(--accent);
+    }
+
+    .header-card::before {
+      content: '❤';
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      font-size: 80px;
+      opacity: 0.08;
+    }
+
+    .header-card .label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    .header-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+
+    .header-card p {
+      font-size: 14px;
+      color: var(--soft);
+      line-height: 1.7;
+      opacity: 0.9;
+    }
+
+    /* Required note */
+    .required-note {
+      background: var(--warm);
+      border-left: 3px solid var(--accent);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .required-note span { color: #c0392b; }
+
+    /* Section label */
+    .section-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 32px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--soft);
+    }
+
+    /* Question Card */
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px 30px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(107, 76, 53, 0.07);
+      border: 1px solid var(--warm);
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 20px rgba(107, 76, 53, 0.12); }
+
+    .question-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    .question-label .req { color: #c0392b; margin-left: 3px; }
+
+    .question-hint {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    /* Textarea */
+    textarea {
+      width: 100%;
+      border: 1.5px solid var(--soft);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--cream);
+      resize: vertical;
+      min-height: 90px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(201, 123, 75, 0.12);
+      background: #fff;
+    }
+    textarea::placeholder { color: #c4a98f; }
+
+    /* Text input */
+    input[type="text"] {
+      width: 100%;
+      border: 1.5px solid var(--soft);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(201, 123, 75, 0.12);
+      background: #fff;
+    }
+    input[type="text"]::placeholder { color: #c4a98f; }
+
+    /* Radio & Checkbox */
+    .options-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--soft);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.18s;
+      background: var(--cream);
+    }
+    .option-item:hover {
+      border-color: var(--accent);
+      background: #fff9f5;
+    }
+    .option-item input { display: none; }
+    .option-item.selected {
+      border-color: var(--accent);
+      background: #fff5ee;
+    }
+
+    .custom-radio, .custom-check {
+      width: 20px; height: 20px;
+      border: 2px solid var(--soft);
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .custom-radio { border-radius: 50%; }
+    .custom-check { border-radius: 5px; }
+
+    .option-item.selected .custom-radio,
+    .option-item.selected .custom-check {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+    .option-item.selected .custom-radio::after {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .option-item.selected .custom-check::after {
+      content: '✓';
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .option-text { font-size: 14px; color: var(--text); }
+
+    /* Scale */
+    .scale-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      padding: 0 4px;
+    }
+    .scale-buttons {
+      display: flex;
+      gap: 8px;
+    }
+    .scale-btn {
+      flex: 1;
+      padding: 10px 4px;
+      border: 1.5px solid var(--soft);
+      border-radius: 8px;
+      background: var(--cream);
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .scale-btn:hover { border-color: var(--accent); color: var(--accent); background: #fff9f5; }
+    .scale-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Submit */
+    .submit-area {
+      margin-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .submit-btn {
+      background: var(--brown);
+      color: #fff;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.5px;
+    }
+    .submit-btn:hover { background: var(--accent); transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); }
+
+    .clear-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .clear-btn:hover { color: var(--brown); }
+
+    /* Success */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 40px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 30px rgba(107, 76, 53, 0.1);
+    }
+    .success-screen .icon { font-size: 60px; margin-bottom: 20px; }
+    .success-screen h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: var(--brown);
+      margin-bottom: 12px;
+    }
+    .success-screen p { color: var(--muted); line-height: 1.7; }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      height: 4px;
+      background: var(--soft);
+      border-radius: 0 0 0 0;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    @media (max-width: 480px) {
+      .header-card { padding: 28px 24px; }
+      .card { padding: 22px 20px; }
+      .scale-buttons { gap: 5px; }
+      .scale-btn { font-size: 13px; }
+    }
+
+    /* Animate in */
+    .card {
+      animation: fadeUp 0.4s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.1s; }
+    .card:nth-child(3) { animation-delay: 0.15s; }
+    .card:nth-child(4) { animation-delay: 0.2s; }
+    .card:nth-child(5) { animation-delay: 0.25s; }
+    .card:nth-child(6) { animation-delay: 0.3s; }
+    .card:nth-child(7) { animation-delay: 0.35s; }
+    .card:nth-child(8) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header-card">
+    <div class="label">Psikologi Perkembangan Keluarga — Tugas Akhir Semester</div>
+    <h1>Kuesioner Penelitian: Pola Relasi Orang Tua dan Anak Usia Dewasa Awal</h1>
+    <p>Kuesioner ini merupakan bagian dari tugas mata kuliah <strong style="color:#f0d8c0">Psikologi Perkembangan Keluarga</strong>. Data yang Anda berikan akan digunakan semata-mata untuk keperluan akademik dan dijaga kerahasiaannya. Tidak ada jawaban benar atau salah — kami sangat menghargai kejujuran dan keterbukaan Anda. Terima kasih atas partisipasi Anda. 🙏</p>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Form -->
+  <form id="mainForm" style="margin-top: 20px;">
+
+
+    <div class="required-note">
+      Pertanyaan bertanda <span>*</span> wajib diisi. Identitas responden bersifat <strong>rahasia</strong> dan hanya digunakan untuk keperluan akademik.
+    </div>
+
+    <!-- IDENTITAS -->
+    <div class="section-label">Data Responden</div>
+    <div class="card">
+      <div class="question-label">Nama Responden (boleh inisial) <span class="req">*</span></div>
+      <div class="question-hint">Contoh: Bapak S. / Ibu R.</div>
+      <input type="text" name="nama" placeholder="Tulis nama atau inisial Anda..." required/>
+    </div>
+    <div class="card">
+      <div class="question-label">Hubungan dengan mahasiswa <span class="req">*</span></div>
+      <div class="options-list" id="qHub">
+        <label class="option-item" onclick="selectOption(this, 'qHub')">
+          <input type="radio" name="hubungan" value="Ayah"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Ayah</span>
+        </label>
+        <label class="option-item" onclick="selectOption(this, 'qHub')">
+          <input type="radio" name="hubungan" value="Ibu"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Ibu</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- BAGIAN 1 -->
+    <div class="section-label">Bagian 1 — Pengalaman sebagai Orang Tua</div>
+
+    <!-- Q1 -->
+    <div class="card">
+      <div class="question-label">1. Apa perasaan Anda saat pertama kali menjadi orang tua? <span class="req">*</span></div>
+      <div class="question-hint">Ceritakan momen atau perasaan yang paling diingat.</div>
+      <textarea name="q1" placeholder="Tulis jawaban Anda di sini..." required></textarea>
+    </div>
+
+    <!-- Q2 -->
+    <div class="card">
+      <div class="question-label">2. Apa hal yang paling membuat Anda merasa bangga atau bahagia sebagai orang tua? <span class="req">*</span></div>
+      <textarea name="q2" placeholder="Tulis jawaban Anda di sini..." required></textarea>
+    </div>
+
+    <!-- Q3 -->
+    <div class="card">
+      <div class="question-label">3. Apa tantangan terbesar yang Anda rasakan selama menjadi orang tua?</div>
+      <div class="question-hint">Boleh dijawab secara umum, tidak harus spesifik.</div>
+      <textarea name="q3" placeholder="Tulis jawaban Anda di sini..."></textarea>
+    </div>
+
+    <!-- BAGIAN 2 -->
+    <div class="section-label">Bagian 2 — Penilaian terhadap Perkembangan Anak</div>
+
+    <!-- Q4 -->
+    <div class="card">
+      <div class="question-label">4. Menurut Anda, apakah anak Anda sudah cukup dewasa dalam menghadapi kehidupan saat ini? <span class="req">*</span></div>
+      <div class="question-hint">Pilih salah satu.</div>
+      <div class="options-list" id="q4">
+        <label class="option-item" onclick="selectOption(this, 'q4')">
+          <input type="radio" name="q4" value="Sangat dewasa"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Ya, sangat dewasa</span>
+        </label>
+        <label class="option-item" onclick="selectOption(this, 'q4')">
+          <input type="radio" name="q4" value="Cukup dewasa"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Cukup dewasa, tapi masih perlu berkembang</span>
+        </label>
+        <label class="option-item" onclick="selectOption(this, 'q4')">
+          <input type="radio" name="q4" value="Belum sepenuhnya"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Belum sepenuhnya, masih ada yang perlu diperbaiki</span>
+        </label>
+        <label class="option-item" onclick="selectOption(this, 'q4')">
+          <input type="radio" name="q4" value="Masih perlu bimbingan"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Masih perlu banyak bimbingan</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Q5 - Scale -->
+    <div class="card">
+      <div class="question-label">5. Seberapa besar rasa tanggung jawab yang Anda lihat pada anak Anda? <span class="req">*</span></div>
+      <div class="question-hint">Pilih angka dari 1 (sangat rendah) hingga 5 (sangat tinggi).</div>
+      <div class="scale-wrap">
+        <div class="scale-labels">
+          <span>😞 Sangat rendah</span>
+          <span>😊 Sangat tinggi</span>
+        </div>
+        <div class="scale-buttons" id="scaleQ5">
+          <button type="button" class="scale-btn" onclick="selectScale('scaleQ5', this, 'q5_scale', 1)">1</button>
+          <button type="button" class="scale-btn" onclick="selectScale('scaleQ5', this, 'q5_scale', 2)">2</button>
+          <button type="button" class="scale-btn" onclick="selectScale('scaleQ5', this, 'q5_scale', 3)">3</button>
+          <button type="button" class="scale-btn" onclick="selectScale('scaleQ5', this, 'q5_scale', 4)">4</button>
+          <button type="button" class="scale-btn" onclick="selectScale('scaleQ5', this, 'q5_scale', 5)">5</button>
+        </div>
+        <input type="hidden" name="q5_scale" id="q5_scale"/>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="card">
+      <div class="question-label">6. Apa satu hal yang paling Anda kagumi dari anak Anda? <span class="req">*</span></div>
+      <textarea name="q6" placeholder="Tulis jawaban Anda di sini..." required></textarea>
+    </div>
+
+    <!-- Q7 -->
+    <div class="card">
+      <div class="question-label">7. Apa satu hal yang menurut Anda masih perlu diperbaiki atau ditingkatkan dari anak Anda?</div>
+      <div class="question-hint">Jawaban ini akan menjadi bahan evaluasi diri yang berharga.</div>
+      <textarea name="q7" placeholder="Tulis jawaban Anda di sini..."></textarea>
+    </div>
+
+    <!-- BAGIAN 3 -->
+    <div class="section-label">Bagian 3 — Dinamika Relasi Orang Tua dan Anak</div>
+
+    <!-- Q8 -->
+    <div class="card">
+      <div class="question-label">8. Menurut Anda, bagaimana hubungan Anda dengan anak Anda saat ini? <span class="req">*</span></div>
+      <div class="options-list" id="q8">
+        <label class="option-item" onclick="selectOption(this, 'q8')">
+          <input type="radio" name="q8" value="Sangat dekat"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Sangat dekat dan terbuka</span>
+        </label>
+        <label class="option-item" onclick="selectOption(this, 'q8')">
+          <input type="radio" name="q8" value="Cukup dekat"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Cukup dekat, tapi masih ada jarak tertentu</span>
+        </label>
+        <label class="option-item" onclick="selectOption(this, 'q8')">
+          <input type="radio" name="q8" value="Kurang terbuka"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Kurang terbuka, komunikasi bisa lebih ditingkatkan</span>
+        </label>
+        <label class="option-item" onclick="selectOption(this, 'q8')">
+          <input type="radio" name="q8" value="Perlu diperbaiki"/>
+          <span class="custom-radio"></span>
+          <span class="option-text">Perlu diperbaiki bersama-sama</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="card">
+      <div class="question-label">9. Adakah hal yang ingin Anda sampaikan kepada anak Anda, tapi belum sempat atau sulit diungkapkan secara langsung?</div>
+      <div class="question-hint">Jawaban ini bersifat rahasia dan sangat membantu penelitian ini.</div>
+      <textarea name="q9" placeholder="Tulis jawaban Anda di sini..." style="min-height: 110px;"></textarea>
+    </div>
+
+    <!-- Q10 -->
+    <div class="card">
+      <div class="question-label">10. Apa harapan terbesar Anda untuk anak Anda ke depannya? <span class="req">*</span></div>
+      <textarea name="q10" placeholder="Tulis jawaban Anda di sini..." required style="min-height: 110px;"></textarea>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-area">
+      <button type="submit" class="submit-btn">Kirim Jawaban →</button>
+      <button type="button" class="clear-btn" onclick="clearForm()">Hapus semua jawaban</button>
+    </div>
+  </form>
+
+  <!-- Success Screen -->
+  <div class="success-screen" id="successScreen">
+    <div class="icon">🎓</div>
+    <h2>Terima Kasih atas Partisipasi Anda!</h2>
+    <p>Jawaban Anda telah berhasil dikirim dan akan digunakan untuk keperluan akademik.<br><br>Kontribusi Anda sangat berarti bagi kelengkapan penelitian ini. 🙏</p>
+  </div>
+
+</div>
+
+<script>
+  // Select radio option
+  function selectOption(el, groupName) {
+    const group = document.getElementById(groupName);
+    if (!group) return;
+    group.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+    updateProgress();
+  }
+
+  // Select scale
+  function selectScale(scaleId, btn, hiddenId, val) {
+    const wrap = document.getElementById(scaleId);
+    wrap.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(hiddenId).value = val;
+    updateProgress();
+  }
+
+  // Progress
+  function updateProgress() {
+    const required = ['q1', 'q2', 'q4', 'q5_scale', 'q6', 'q8', 'q10'];
+    let filled = 0;
+    required.forEach(name => {
+      const el = document.querySelector(`[name="${name}"]`);
+      if (!el) return;
+      if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') {
+        if (el.value.trim() !== '') filled++;
+      }
+    });
+    // count radio
+    ['q4','q8'].forEach(n => {
+      if (document.querySelector(`input[name="${n}"]:checked`)) filled++;
+    });
+    const pct = Math.min(100, Math.round((filled / required.length) * 100));
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  document.querySelectorAll('textarea, input[type="text"]').forEach(el => {
+    el.addEventListener('input', updateProgress);
+  });
+
+  // Submit via Formspree
+  document.getElementById('mainForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.querySelector('.submit-btn');
+    btn.textContent = 'Mengirim...';
+    btn.disabled = true;
+
+    const formData = new FormData(this);
+    // Collect all radio values manually
+    document.querySelectorAll('input[type="radio"]:checked').forEach(r => {
+      formData.set(r.name, r.value);
+    });
+
+    // Build readable email body
+    const labels = {
+      nama: 'Nama Responden',
+      hubungan: 'Hubungan dengan mahasiswa',
+      q1: '1. Perasaan saat pertama kali menjadi orang tua',
+      q2: '2. Hal yang membuat bangga/bahagia sebagai orang tua',
+      q3: '3. Tantangan terbesar selama menjadi orang tua',
+      q4: '4. Apakah anak sudah cukup dewasa?',
+      q5_scale: '5. Skala tanggung jawab anak (1-5)',
+      q6: '6. Satu hal yang paling dikagumi dari anak',
+      q7: '7. Satu hal yang perlu diperbaiki dari anak',
+      q8: '8. Bagaimana hubungan orang tua dan anak saat ini?',
+      q9: '9. Hal yang ingin disampaikan tapi belum terucap',
+      q10: '10. Harapan terbesar untuk anak ke depannya',
+    };
+
+    let message = '=== HASIL KUESIONER PENELITIAN ===\n\n';
+    for (const [key, label] of Object.entries(labels)) {
+      const val = formData.get(key) || '(tidak diisi)';
+      message += `${label}:\n${val}\n\n`;
+    }
+
+    try {
+      const res = await fetch('https://formspree.io/f/xzzbeqka', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: 'luksyafrilias@gmail.com',
+          _subject: '📋 Hasil Kuesioner Penelitian — Responden: ' + (formData.get('nama') || 'Anonim'),
+          message: message
+        })
+      });
+
+      if (res.ok) {
+        document.getElementById('mainForm').style.display = 'none';
+        document.getElementById('successScreen').style.display = 'block';
+        document.getElementById('progressBar').style.width = '100%';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        btn.textContent = 'Gagal kirim, coba lagi →';
+        btn.disabled = false;
+        alert('Terjadi kesalahan saat mengirim. Silakan coba lagi.');
+      }
+    } catch(err) {
+      btn.textContent = 'Kirim Jawaban →';
+      btn.disabled = false;
+      alert('Tidak dapat terhubung. Periksa koneksi internet Anda.');
+    }
+  });
+
+  // Clear
+  function clearForm() {
+    if (!confirm('Yakin ingin menghapus semua jawaban?')) return;
+    document.getElementById('mainForm').reset();
+    document.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
+    document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('input[type="hidden"]').forEach(h => h.value = '');
+    updateProgress();
+  }
+</script>
+</body>
+</html>
